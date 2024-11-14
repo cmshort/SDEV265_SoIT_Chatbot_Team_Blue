@@ -1,0 +1,87 @@
+<html lang = "en">
+<%- include('./partials/head.ejs') %>
+<body>
+
+    <%- include('./partials/nav.ejs') %>
+
+    <div class="chat-container">
+        <div class="chat-body" id="chat-body">
+            <div class="message bot">
+                <div class="avatar"><img src="/ivybot_face.png"></div>
+                <div class="content">
+                    <p>Hi, I'm Ivy! I am here to assist you.</p><br>
+                </div>                       
+            </div>
+        </div>
+        <div class="promptbox">
+            <form action="/ivybot" method="POST">
+                <input type="text" id="prompt" name="prompt" placeholder="Type a question..." required autofocus>
+            </form>
+        </div>
+    </div>
+
+    
+
+    <!-- ChatBot Fetch Script -->
+    <script>
+        const form = document.querySelector('form'); 
+
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+
+            //create user query message
+            const chatBody = document.getElementById('chat-body'); 
+            const userMessage = document.createElement('div');
+            userMessage.classList.add('message', 'user');
+            const userMessageContent = document.createElement('div');
+            userMessageContent.classList.add('content');
+            userMessageContent.textContent = form.prompt.value;
+            userMessage.appendChild(userMessageContent);
+            chatBody.appendChild(userMessage);
+
+            // get the values
+            const prompt = form.prompt.value;
+
+            //reset form input
+            form.prompt.value = '';
+
+            //try to send the user prompt via POST
+            try {
+                const res = await fetch('/ivybot', {
+                    method: 'POST',              
+                    headers: { 'Content-Type': 'application/json'},
+                    body: JSON.stringify({ prompt })
+                });
+
+                const data = await res.json();
+                console.log(data);
+
+                //generate bot response div
+                const botResponse = document.createElement('div');
+                botResponse.classList.add('message', 'bot');
+
+                const botMessageAvatar = document.createElement('div');
+                botMessageAvatar.classList.add('avatar');
+                botMessageAvatar.innerHTML = '<img src="/ivybot_face.png">';
+
+                const botMessageContent = document.createElement('div');                
+                botMessageContent.classList.add('content');
+                botMessageContent.innerHTML = data.response;
+
+                botResponse.appendChild(botMessageAvatar);
+                botResponse.appendChild(botMessageContent);
+                chatBody.appendChild(botResponse);
+            }
+            catch (err) {
+                console.log(err);
+            }
+
+            //update the view by scrolling to the bottom of the conversation
+            chatBody.scrollTop = chatBody.scrollHeight;
+        });
+      </script> 
+
+    <%- include('./partials/footer.ejs') %>
+
+</body>
+</html>
