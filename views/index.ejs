@@ -1,13 +1,13 @@
 <html lang = "en">
 <%- include('./partials/head.ejs') %>
-<body>
+<body style="background-image: url(img/bg_faint.png);">
 
     <%- include('./partials/nav.ejs') %>
 
     <div class="chat-container">
         <div class="chat-body" id="chat-body">
             <div class="message bot">
-                <div class="avatar"><img src="/ivybot_face.png"></div>
+                <div class="avatar"><img src="img/ivybot_face.png"></div>
                 <div class="content">
                     <p>Hi, I'm Ivy! I am here to assist you.</p><br>
                 </div>                       
@@ -62,7 +62,7 @@
 
                 const botMessageAvatar = document.createElement('div');
                 botMessageAvatar.classList.add('avatar');
-                botMessageAvatar.innerHTML = '<img src="/ivybot_face.png">';
+                botMessageAvatar.innerHTML = '<img src="img/ivybot_face.png">';
 
                 const botMessageContent = document.createElement('div');                
                 botMessageContent.classList.add('content');

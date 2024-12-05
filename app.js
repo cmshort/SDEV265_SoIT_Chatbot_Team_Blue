@@ -50,6 +50,9 @@ app.use(postLimiter);
 app.get('/', (req, res) =>{
     res.render('index', {title: 'Home'})
 });
+app.get('/test', (req, res) =>{
+    res.render('test', {title: 'Home'})
+});
 
 // bot routes
 app.use(botRoutes);
