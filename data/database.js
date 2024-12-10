@@ -4,11 +4,15 @@ const responses = [
         reply: "The only winning move is not to play."
     },
     {
-        pattern: "how are you today",
+        pattern: "how are you",
         reply: "Doing great!  I'm excited to help you find the information you require!"
     },
     {
         pattern: "what are you",
+        reply: "I am a node.js / ejs interactive chatbot developed for SDEV265 as a School of IT information resource and a capstone project for the course."
+    },
+    {
+        pattern: "how are you made",
         reply: "I am a node.js / ejs interactive chatbot developed for SDEV265 as a School of IT information resource and a capstone project for the course."
     },
     {
@@ -20,10 +24,28 @@ const responses = [
         reply: "My full name is IvyBot, but you can call me Ivy"
     },
     {
+        pattern: "what campuses are there",
+        reply: "Here's some information about our campuses",
+        url: "https://www.ivytech.edu/locations/",
+        link: "Campus Locations"
+    },
+    {
         pattern: "who is the dean of the school of it",
         reply: "Patrick Benner",
         url: "https://whitepages.ivytech.edu/profile/pbenner/",
         link: "White Pages Entry"
+    },
+    {
+        pattern: "can you give me information about admissions",
+        reply: "Here's some information about admissions!",
+        url: "https://www.ivytech.edu/admissions/",
+        link: "Admissions"
+    },
+    {
+        pattern: "can you give me information about enrollment",
+        reply: "Here's some information about enrollment!",
+        url: "https://www.ivytech.edu/admissions/",
+        link: "Enrollment"
     },
     {
         pattern: "who is instructor for SDEV265",
@@ -71,6 +93,13 @@ const responses = [
         type: "ADDRESS_LOOKUP"
     },
     {
+        pattern: "how do i get to",
+        reply: "",
+        url: "",
+        link: "",
+        type: "ADDRESS_LOOKUP"
+    },
+    {
         pattern: "what's the phone number",
         reply: "",
         url: "",
@@ -83,6 +112,18 @@ const responses = [
         url: "",
         link: "",
         type: "PHONE_LOOKUP"
+    },
+    {
+        pattern: "what programs",
+        reply: "Here are the programs you can find at IvyTech!",
+        url: "https://www.ivytech.edu/programs/",
+        link: "Programs"
+    },
+    {
+        pattern: "what programs ivy tech",
+        reply: "Here are the programs you can find at IvyTech!",
+        url: "https://www.ivytech.edu/programs/",
+        link: "Programs"
     },
     {
         pattern: "what kind of programs do you offer",
@@ -119,6 +160,12 @@ const responses = [
         reply: "Ivy Tech offers more than 70 programs including Nursing, Cloud Technologies, Cybersecurity, Precision Agriculture, and Business Administration.",
         url: "https://www.ivytech.edu/programs/all-academic-programs/",
         link: "All Academic Programs"
+    },
+    {
+        pattern: "what programs or courses are available school of it",
+        reply: "Here's some information about course offerings from the School of Information Technology! ",
+        url: "https://www.ivytech.edu/locations/south-bend/partnerships-special-programs/school-of-information-technology/",
+        link: "School of IT"
     },
     {
         pattern: "how do I apply to Ivy Tech",
@@ -233,6 +280,12 @@ const responses = [
         reply: "Support for online students is available through the online support page.",
         url: "https://www.ivytech.edu/online-support/",
         link: "Online Support"
+    },
+    {
+        pattern: "how many students are there",
+        reply: "During the 2023-2024 academic year, we served over 198,000 students!",
+        url: "https://www.ivytech.edu/about-ivy-tech/college-operations/diversity-equity-belonging/",
+        link: "Students"
     }
 ];
 
