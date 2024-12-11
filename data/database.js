@@ -1,5 +1,13 @@
 const responses = [
     {
+        pattern: "hello",
+        reply: "Well hello yourself!"
+    },
+    {
+        pattern: "hi",
+        reply: "Hi there!"
+    },
+    {
         pattern: "would you like to play a game",
         reply: "The only winning move is not to play."
     },

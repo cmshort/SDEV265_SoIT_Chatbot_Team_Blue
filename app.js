@@ -2,28 +2,17 @@ require('dotenv').config();
 const express = require('express');
 const rateLimit = require('express-rate-limit');
 const morgan = require('morgan');
-//const mongoose = require('mongoose');
-//const Course = require('./models/course');
-//const User = require('./models/User');
-//const authRoutes = require('./routes/authRoutes');
-//const courseRoutes = require('./routes/courseRoutes');
 const botRoutes = require('./routes/botRoutes');
-//const cookieParser = require('cookie-parser');
 const fuzz = require('fuzzball');
-//const { requireAuth, checkUser, checkTeacher } = require('./middleware/authMiddleware');
 
 // express app
 const app = express();
-const PORT = process.env.PORT || 3030;
+const PORT = process.env.PORT;
 
 // connect to mongodb
 const dbURI = process.env.MONGO_URI;
 
-//mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true})
-//    .then((result) => app.listen(3000))
-//    .catch((err) => console.log(err));
-
-// Create a rate limiter for POST requests
+// create a rate limiter for POST requests
 const postLimiter = rateLimit({
     windowMs: 5 * 60 * 1000, // 10 minutes
     max: 50, // Limit each IP to 100 requests per windowMs
@@ -35,7 +24,7 @@ const postLimiter = rateLimit({
 app.set('view engine', 'ejs');
 
 app.listen(PORT, () => {
-    console.log('server started on port ${PORT}');
+    console.log(`${new Date().toISOString()} :: Server started on port ${PORT}`);
 });
 
 // middleware & static files
@@ -44,7 +33,6 @@ app.use(express.urlencoded( { extended: true}));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(postLimiter);
-//app.use(cookieParser());
 
 // routes
 app.get('/', (req, res) =>{

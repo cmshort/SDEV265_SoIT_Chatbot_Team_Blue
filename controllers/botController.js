@@ -4,6 +4,7 @@ const { responses, locations} = require('../data/database'); // Stand-in for ext
 // TODO: Example URL for direct course catalog search https://catalog.ivytech.edu/search_advanced.php?cur_cat_oid=9&ecpage=1&cpage=1&ppage=1&pcpage=1&spage=1&tpage=1&search_database=Search&filter%5Bkeyword%5D=SDEV120&filter%5Bexact_match%5D=1&filter%5B3%5D=1&filter%5B31%5D=1
 // TODO: Example URL for course detail page https://catalog.ivytech.edu/preview_course_nopop.php?catoid=9&coid=40333
 
+// Generic misunderstanding responses
 const errorStatements = [
     "I'm not sure what you meant by that.",
     "Hmmm...try rephrasing that question",
@@ -12,8 +13,7 @@ const errorStatements = [
 
 function getLocationIndexFromPrompt(prompt)
 {
-    console.log('GETTING LOCATION');
-    console.log('RECEIVED PROMPT:' + prompt);
+    console.log(`${new Date().toISOString()} :: GETTING LOCATION`);
 
     options = {
         scorer: fuzz.token_set_ratio, // Any function that takes two values and returns a score, default: ratio
@@ -25,7 +25,7 @@ function getLocationIndexFromPrompt(prompt)
 
     var results = fuzz.extract(prompt, locations, options);
 
-    console.log('RESULTS');
+    console.log(`${new Date().toISOString()} :: LOOKUP RESULTS: `);
     console.log(results);
 
     if (results == null) return -1;
@@ -49,7 +49,6 @@ module.exports.query = (req, res) => {
     var suffix = "&nbsp;<i class='bx bx-link-external'></i></a>";
 
     options = {
-        //scorer: fuzz.token_set_ratio, // Any function that takes two values and returns a score, default: ratio
         scorer: fuzz.token_similarity_sort_ratio, // Any function that takes two values and returns a score, default: ratio
         processor: choice => choice.pattern,  // Takes choice object, returns string, default: no processor. Must supply if choices are not already strings.
         limit: 2, // Max number of top results to return, default: no limit / 0.
@@ -61,15 +60,18 @@ module.exports.query = (req, res) => {
     var results = fuzz.extract(prompt, responses, options);
     
     if (results.length !=0){
-        console.log(prompt);
+        //console.log(`${new Date().toISOString()} :: RECEIVED PROMPT: ${prompt}`);
+        console.log(`${new Date().toISOString()} :: RECEIVED PROMPT `);
+        console.log(`${new Date().toISOString()} :: FUZZY MATCH RESULTS: `);
         console.log(results);        
 
         //handle special lookups
         switch (results[0][0].type)
         {
+            // Special logic for address lookup and parsing
             case 'ADDRESS_LOOKUP':
                 var index = getLocationIndexFromPrompt(prompt);
-                console.log('RETURNED: ' + index);            
+                console.log(`${new Date().toISOString()} :: INDEX RETURNED: ${index}`);            
 
                 if(index > -1)
                 {
@@ -82,9 +84,11 @@ module.exports.query = (req, res) => {
                     response = errorStatements[n];
                 }
                 break;
+            
+            // Special logic for campus phone number lookup and parsing
             case 'PHONE_LOOKUP':
                 var index = getLocationIndexFromPrompt(prompt);
-                console.log('RETURNED: ' + index);
+                console.log(`${new Date().toISOString()} :: INDEX RETURNED: ${index}`);
 
                 if(index > -1)
                 {
@@ -110,6 +114,7 @@ module.exports.query = (req, res) => {
     } 
 
     //res.render('index', {title: 'Home', query: req.body.prompt, response: response});
+    console.log(`${new Date().toISOString()} :: BOT RESPONSE: `);
     console.log(response);
     res.json({response});    
 }
